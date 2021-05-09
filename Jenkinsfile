@@ -21,15 +21,24 @@ pipeline {
             steps {
                 echo 'Stage ci...'
             }
+            steps {
+                gradle('deployCI')
+            }
         }
         stage('staging') {
             steps {
                 echo 'Stage staging...'
             }
+            steps {
+                gradle('deployStaging')
+            }
         }
         stage('production') {
             steps {
                 echo 'Stage production...'
+            }
+            steps {
+                gradle('deployProduction')
             }
         }
     }
@@ -54,5 +63,5 @@ pipeline {
 }
 
 def gradle(String... args) {
-        sh './gradlew --no-daemon' args.join(' ')
+    sh './gradlew --no-daemon' args.join(' ')
 }
