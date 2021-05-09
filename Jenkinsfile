@@ -20,19 +20,22 @@ pipeline {
         stage('ci') {
             steps {
                 echo 'Stage ci...'
-                gradle(args = 'deployCI')
+                sh './gradlew deployCI --no-daemon'
+                //gradle(args = 'deployCI')
             }
         }
         stage('staging') {
             steps {
                 echo 'Stage staging...'
-                gradle(args = 'deployStaging')
+                sh './gradlew deployStaging --no-daemon'
+                //gradle(args = 'deployStaging')
             }
         }
         stage('production') {
             steps {
                 echo 'Stage production...'
-                gradle(args = 'deployProduction')
+                sh './gradlew deployProduction --no-daemon'
+                //gradle(args = 'deployProduction')
             }
         }
     }
