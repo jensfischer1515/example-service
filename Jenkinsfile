@@ -20,19 +20,19 @@ pipeline {
         stage('ci') {
             steps {
                 echo 'Stage ci...'
-                gradle('deployCI')
+                gradle(args = 'deployCI')
             }
         }
         stage('staging') {
             steps {
                 echo 'Stage staging...'
-                gradle('deployStaging')
+                gradle(args = 'deployStaging')
             }
         }
         stage('production') {
             steps {
                 echo 'Stage production...'
-                gradle('deployProduction')
+                gradle(args = 'deployProduction')
             }
         }
     }
