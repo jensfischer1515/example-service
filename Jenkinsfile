@@ -60,5 +60,5 @@ pipeline {
 }
 
 def gradlew(String... args) {
-    sh "./gradlew ${args.join(' ')} --console=verbose --info --stacktrace --no-daemon"
+    sh "./gradlew ${args.join(' ')} --console=verbose --info --stacktrace --daemon"
 }
