@@ -12,7 +12,7 @@ pipeline {
                 echo 'Stage build...'
                 script {
                     try {
-                        gradlew('clean', 'test')
+                        gradlew('clean', 'build', '--refresh-dependencies')
                     } finally {
                         junit '**/build/test-results/test/*.xml' //make the junit test results available in any case (success & failure)
                     }
@@ -60,5 +60,5 @@ pipeline {
 }
 
 def gradlew(String... args) {
-    sh "./gradlew ${args.join(' ')} -s"
+    sh "./gradlew ${args.join(' ')} --console=verbose --info --stacktrace"
 }
