@@ -12,29 +12,29 @@ pipeline {
                 echo 'Stage build...'
                 script {
                     try {
-                        gradle 'clean' 'test'
+                        gradlew('clean', 'test')
                     } finally {
                         junit '**/build/test-results/test/*.xml' //make the junit test results available in any case (success & failure)
                     }
                 }
-             }
+            }
         }
         stage('ci') {
             steps {
                 echo 'Stage ci...'
-                gradle 'deployCI' 'properties'
+                gradlew('deployCI', 'properties')
             }
         }
         stage('staging') {
             steps {
                 echo 'Stage staging...'
-                gradle 'deployStaging' 'properties'
+                gradlew('deployStaging', 'properties')
             }
         }
         stage('production') {
             steps {
                 echo 'Stage production...'
-                gradle 'deployProduction' 'properties'
+                gradlew('deployProduction', 'properties')
                 sh './gradlew deployProduction'
             }
         }
@@ -59,7 +59,6 @@ pipeline {
     }
 }
 
-def gradle(String... args) {
-    def tasks = args.join(' ')
-    sh "./gradlew $tasks"
+def gradlew(String... args) {
+    sh "./gradlew ${args.join(' ')} -s"
 }
