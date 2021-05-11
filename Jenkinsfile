@@ -6,32 +6,96 @@ pipeline {
     triggers {
         pollSCM('* * * * *')
     }
+
+    parameters {
+        string(name: 'PERSON', defaultValue: 'Mr Jenkins', description: 'Who should I say hello to?')
+        text(name: 'BIOGRAPHY', defaultValue: '', description: 'Enter some information about the person')
+        booleanParam(name: 'TOGGLE', defaultValue: true, description: 'Toggle this value')
+        choice(name: 'CHOICE', choices: ['One', 'Two', 'Three'], description: 'Pick something')
+        password(name: 'PASSWORD', defaultValue: 'SECRET', description: 'Enter a password')
+    }
+
     stages {
-        stage('build') {
-            steps {
-                echo 'Stage build...'
-                script {
-                    try {
-                        gradlew('clean', 'build', '--refresh-dependencies')
-                    } finally {
-                        junit '**/build/test-results/test/*.xml' //make the junit test results available in any case (success & failure)
+
+// ==========================================================================================================================================================
+
+        stage('BUILD') {
+            environment {
+                FOR_SEQUENTIAL = "some-value"
+            }
+            stages {
+                stage('Init') {
+                    steps {
+                        echo 'Init'
+                        gradlew('sleep')
+                    }
+                }
+                stage('Deploy Service Resources') {
+                    steps {
+                        echo 'Deploy Service Resources'
+                        gradlew('sleep')
+                    }
+                }
+                stage('Build') {
+                    steps {
+                        echo 'Build'
+                        script {
+                            try {
+                                gradlew('clean', 'build', '--refresh-dependencies')
+                            } finally {
+                                junit '**/build/test-results/test/*.xml' //make the junit test results available in any case (success & failure)
+                            }
+                        }
+                    }
+                }
+                stage('TestJob Starter Parallel') {
+                    parallel {
+                        stage('In Parallel 1') {
+                            steps {
+                                echo "In Parallel 1"
+                            }
+                        }
+                        stage('In Parallel 2') {
+                            steps {
+                                echo "In Parallel 2"
+                            }
+                        }
+                    }
+                }
+                stage('Style Check') {
+                    when { environment name: 'USE_CHECK_JOBS', value: 'true' }
+                    steps {
+                        echo 'Style Check'
+                        gradlew('sleep')
                     }
                 }
             }
         }
-        stage('ci') {
+
+// ==========================================================================================================================================================
+
+        stage('CI') {
+            when { branch 'main' }
             steps {
                 echo 'Stage ci...'
                 gradlew('deployCI', 'properties')
             }
         }
-        stage('staging') {
+
+// ==========================================================================================================================================================
+
+        stage('STAGING') {
+            when { branch 'main' }
             steps {
                 echo 'Stage staging...'
                 gradlew('deployStaging', 'properties')
             }
         }
-        stage('production') {
+
+// ==========================================================================================================================================================
+
+        stage('PRODUCTION') {
+            when { branch 'main' }
             steps {
                 echo 'Stage production...'
                 gradlew('deployProduction', 'properties')
@@ -39,6 +103,9 @@ pipeline {
             }
         }
     }
+
+// ==========================================================================================================================================================
+
     post {
         always {
             echo 'This will always run'
@@ -58,6 +125,9 @@ pipeline {
         }
     }
 }
+
+// ==========================================================================================================================================================
+
 
 def gradlew(String... args) {
     sh "./gradlew ${args.join(' ')} --console=verbose --info --stacktrace --daemon"

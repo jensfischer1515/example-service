@@ -15,6 +15,13 @@ class PipelinePlugin implements Plugin<Project> {
     @Override
     void apply(Project project) {
 
+        project.tasks.register('sleep') {
+            it.group = "pipeline"
+            it.doLast {
+                sleep(100, 1500)
+            }
+        }
+
         project.tasks.register('deployCI') {
             it.group = "pipeline"
             it.doLast {
