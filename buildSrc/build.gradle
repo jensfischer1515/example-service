@@ -1,0 +1,19 @@
+plugins {
+    id "groovy"
+    id "java-gradle-plugin"
+}
+
+repositories {
+    //mavenLocal()
+    mavenCentral()
+    gradlePluginPortal()
+}
+
+gradlePlugin {
+    plugins {
+        pipeline {
+            id = "com.example.gradle.pipeline"
+            implementationClass = "com.example.gradle.PipelinePlugin"
+        }
+    }
+}
