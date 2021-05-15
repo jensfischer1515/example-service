@@ -1,10 +1,11 @@
 #!groovy
 
-library identifier: 'gradle-shared-lib@main', retriever: modernSCM(
+def lib = library identifier: 'gradle-shared-lib@main', retriever: modernSCM(
         [$class       : 'GitSCMSource',
          remote       : 'https://github.com/jensfischer1515/jenkins-shared-lib-gradle.git',
          credentialsId: 'github-key'])
 
+def gradle = lib.org.example.pipeline.Gradle.new(this)
 
 
 /*
@@ -13,7 +14,7 @@ utils.handyStuff()
 */
 
 //@Library('gradle-shared-lib') import org.example.pipeline.Gradle
-def gradle = new org.example.pipeline.Gradle(this)
+//def gradle = new org.example.pipeline.Gradle(this)
 
 pipeline {
     agent { docker { image 'openjdk:11-jdk' } }
