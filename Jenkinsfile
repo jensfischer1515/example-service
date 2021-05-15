@@ -41,7 +41,8 @@ pipeline {
                 stage('Init') {
                     steps {
                         script {
-                            def gradle = lib.org.example.pipeline.Gradle.new(this)
+                            //def gradle = lib.org.example.pipeline.Gradle.new(this)
+                            def gradle = new org.example.pipeline.Gradle(this)
                             gradle.wrapper('help')
                         }
                         echo 'Init'
