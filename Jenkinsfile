@@ -13,8 +13,7 @@ utils.handyStuff()
 */
 
 //@Library('gradle-shared-lib') import org.example.pipeline.Gradle
-//def gradle = new org.example.pipeline.Gradle(this)
-
+def gradle = new org.example.pipeline.Gradle(this)
 
 pipeline {
     agent { docker { image 'openjdk:11-jdk' } }
@@ -43,7 +42,7 @@ pipeline {
                 stage('Init') {
                     steps {
                         echo 'Init'
-                        //gradle.wrapper('help')
+                        gradle.wrapper('help')
                         gradlew('sleep')
                     }
                 }
