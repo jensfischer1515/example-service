@@ -59,8 +59,10 @@ pipeline {
                             gradle.wrapper('help')
                         }
                         echo 'Init'
-                        // statically imported method from shared lib
-                        foo this, 'sleep'
+                        script {
+                            // statically imported method from shared lib
+                            foo this, 'sleep'
+                        }
                         //gradlew('sleep')
                     }
                 }
