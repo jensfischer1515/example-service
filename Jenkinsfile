@@ -8,8 +8,12 @@ def lib = library identifier: 'gradle-shared-lib@main', retriever: modernSCM(
 */
 
 //@Library('shared-pipeline') _
-@Library('shared-pipeline') import org.example.pipeline.Gradle
+@Library('shared-pipeline@main') import org.example.pipeline.Gradle
 def gradle = new Gradle(this)
+
+// static import of all static methods
+@Library('shared-pipeline@main') import static org.example.pipeline.Gradle.*
+
 
 
 //libraries {
@@ -52,12 +56,12 @@ pipeline {
                 stage('Init') {
                     steps {
                         script {
-                            //def gradle = lib.org.example.pipeline.Gradle.new(this)
-                            //def gradle = new org.example.pipeline.Gradle(this)
                             gradle.wrapper('help')
                         }
                         echo 'Init'
-                        gradlew('sleep')
+                        // statically imported method from shared lib
+                        foo this, 'sleep'
+                        //gradlew('sleep')
                     }
                 }
                 stage('Deploy Service Resources') {
