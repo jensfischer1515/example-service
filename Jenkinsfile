@@ -42,9 +42,9 @@ pipeline {
                     steps {
                         script {
                             def gradle = lib.org.example.pipeline.Gradle.new(this)
+                            gradle.wrapper('help')
                         }
                         echo 'Init'
-                        gradle.wrapper('help')
                         gradlew('sleep')
                     }
                 }
