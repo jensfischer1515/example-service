@@ -2,7 +2,7 @@
 
 library identifier: 'gradle-shared-lib@main', retriever: modernSCM(
         [$class       : 'GitSCMSource',
-         remote       : 'git@github.com:jensfischer1515/jenkins-shared-lib-gradle.git',
+         remote       : 'https://github.com/jensfischer1515/jenkins-shared-lib-gradle.git',
          credentialsId: 'github-key'])
 
 
