@@ -111,7 +111,7 @@ pipeline {
 
 // ==========================================================================================================================================================
 
-        pipestage stage: 'CI', branch: 'main', tasks: 'properties'
+        //pipestage stage: 'CI', branch: 'main', tasks: 'properties'
 
         stage('CI') {
             when { branch 'main' }
@@ -138,7 +138,6 @@ pipeline {
             steps {
                 echo 'Stage production...'
                 gradlew('deployProduction', 'properties')
-                sh './gradlew deployProduction'
             }
         }
     }
