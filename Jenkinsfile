@@ -12,7 +12,7 @@ def lib = library identifier: 'gradle-shared-lib@main', retriever: modernSCM(
 def gradle = new Gradle(this)
 
 // static import of all static methods
-@Library('shared-pipeline') import static org.example.pipeline.Gradle.*
+import static org.example.pipeline.Gradle.*
 
 
 
