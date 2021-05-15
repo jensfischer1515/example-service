@@ -5,6 +5,8 @@ def lib = library identifier: 'gradle-shared-lib@main', retriever: modernSCM(
          remote       : 'https://github.com/jensfischer1515/jenkins-shared-lib-gradle.git',
          credentialsId: 'github-key'])
 
+import org.example.pipeline.Gradle
+
 
 /*
 def utils = library('mylib').com.mycorp.jenkins.Utils.new(this)
