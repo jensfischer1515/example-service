@@ -1,11 +1,18 @@
 #!groovy
 
+/*
 def lib = library identifier: 'gradle-shared-lib@main', retriever: modernSCM(
         [$class       : 'GitSCMSource',
          remote       : 'https://github.com/jensfischer1515/jenkins-shared-lib-gradle.git',
          credentialsId: 'github-key'])
+*/
 
-import org.example.pipeline.Gradle
+//@Library('shared-pipeline') _
+//@Library('shared-pipeline') import org.example.pipeline.Gradle
+
+libraries {
+    lib('shared-pipeline')
+}
 
 
 /*
@@ -42,11 +49,11 @@ pipeline {
             stages {
                 stage('Init') {
                     steps {
-//                        script {
-//                            //def gradle = lib.org.example.pipeline.Gradle.new(this)
-//                            def gradle = new org.example.pipeline.Gradle(this)
-//                            gradle.wrapper('help')
-//                        }
+                        script {
+                            //def gradle = lib.org.example.pipeline.Gradle.new(this)
+                            def gradle = new org.example.pipeline.Gradle(this)
+                            gradle.wrapper('help')
+                        }
                         echo 'Init'
                         gradlew('sleep')
                     }
