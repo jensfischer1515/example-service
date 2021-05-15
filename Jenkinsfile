@@ -5,8 +5,6 @@ def lib = library identifier: 'gradle-shared-lib@main', retriever: modernSCM(
          remote       : 'https://github.com/jensfischer1515/jenkins-shared-lib-gradle.git',
          credentialsId: 'github-key'])
 
-def gradle = lib.org.example.pipeline.Gradle.new(this)
-
 
 /*
 def utils = library('mylib').com.mycorp.jenkins.Utils.new(this)
@@ -42,6 +40,9 @@ pipeline {
             stages {
                 stage('Init') {
                     steps {
+                        script {
+                            def gradle = lib.org.example.pipeline.Gradle.new(this)
+                        }
                         echo 'Init'
                         gradle.wrapper('help')
                         gradlew('sleep')
