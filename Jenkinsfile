@@ -1,5 +1,21 @@
 #!groovy
 
+library identifier: 'gradle-shared-lib@main', retriever: modernSCM(
+        [$class       : 'GitSCMSource',
+         remote       : 'git@github.com:jensfischer1515/jenkins-shared-lib-gradle.git',
+         credentialsId: 'github-key'])
+
+
+
+/*
+def utils = library('mylib').com.mycorp.jenkins.Utils.new(this)
+utils.handyStuff()
+*/
+
+//@Library('gradle-shared-lib') import org.example.pipeline.Gradle
+//def gradle = new org.example.pipeline.Gradle(this)
+
+
 pipeline {
     agent { docker { image 'openjdk:11-jdk' } }
 
@@ -27,6 +43,7 @@ pipeline {
                 stage('Init') {
                     steps {
                         echo 'Init'
+                        //gradle.wrapper('help')
                         gradlew('sleep')
                     }
                 }
@@ -43,7 +60,8 @@ pipeline {
                             try {
                                 gradlew('clean', 'build', '--refresh-dependencies')
                             } finally {
-                                junit '**/build/test-results/test/*.xml' //make the junit test results available in any case (success & failure)
+                                junit '**/build/test-results/test/*.xml'
+                                //make the junit test results available in any case (success & failure)
                             }
                         }
                     }
@@ -128,7 +146,8 @@ pipeline {
 
 // ==========================================================================================================================================================
 
-
+/*
 def gradlew(String... args) {
     sh "./gradlew ${args.join(' ')} --console=verbose --info --stacktrace --daemon"
 }
+ */
