@@ -8,11 +8,12 @@ def lib = library identifier: 'gradle-shared-lib@main', retriever: modernSCM(
 */
 
 //@Library('shared-pipeline') _
-//@Library('shared-pipeline') import org.example.pipeline.Gradle
+@Library('shared-pipeline') import org.example.pipeline.Gradle
 
-libraries {
-    lib('shared-pipeline')
-}
+
+//libraries {
+//    lib('shared-pipeline')
+//}
 
 
 /*
