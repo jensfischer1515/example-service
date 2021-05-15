@@ -9,6 +9,7 @@ def lib = library identifier: 'gradle-shared-lib@main', retriever: modernSCM(
 
 //@Library('shared-pipeline') _
 @Library('shared-pipeline') import org.example.pipeline.Gradle
+def gradle = new Gradle(this)
 
 
 //libraries {
@@ -52,7 +53,7 @@ pipeline {
                     steps {
                         script {
                             //def gradle = lib.org.example.pipeline.Gradle.new(this)
-                            def gradle = new org.example.pipeline.Gradle(this)
+                            //def gradle = new org.example.pipeline.Gradle(this)
                             gradle.wrapper('help')
                         }
                         echo 'Init'
